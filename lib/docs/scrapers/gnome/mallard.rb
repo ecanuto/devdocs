@@ -4,7 +4,8 @@ module Docs
     self.abstract = true
     self.root_path = 'index.html'
 
-    html_filters.push 'mallard/entries', 'mallard/clean_html'
+    html_filters.push 'mallard/entries', 'mallard/clean_html',
+                      'mallard/fix_gtkdoc'
 
     options[:container] = '.body'
   end
