@@ -5,5 +5,7 @@ module Docs
     self.root_path = 'index.html'
 
     html_filters.push 'mallard/entries', 'mallard/clean_html'
+
+    options[:container] = '.body'
   end
 end
