@@ -4,6 +4,10 @@ module Docs
     # where it looks nice in the DevDocs browser.
     class CleanHtmlFilter < Filter
       def call
+        # Replace <span class="code"> elements with the more semantic <code>
+        css('p span.code').each do |node|
+          node.name = 'code'
+        end
         doc
       end
     end
