@@ -2,25 +2,22 @@ module Docs
   class Mallard
     # Filter that fixes all internal GtkDoc links such as function(), #type,
     # etc.
-    class FixGtkdocFilter < Filter
+    class FixGtkdocFilter
       NAMESPACES = {
         'g' => 'gobject',
         'gtk' => 'gtk'
       }
 
-      def call
-        css('p').each do |node|
-          fix_gtkdoc_markup node, /([A-Za-z_]+)\(\)/, :fix_parentheses_link
-          fix_gtkdoc_markup node, /@([A-Za-z_]+)/, :fix_atsign_markup
-          fix_gtkdoc_markup node, /^(- .*)/, :fix_markdown_list
-        end
-        doc
+      def process(html)
+        fix_gtkdoc_markup html, /([A-Za-z_]+)\(\)/, :fix_parentheses_link
+        fix_gtkdoc_markup html, /@([A-Za-z_]+)/, :fix_atsign_markup
+        fix_gtkdoc_markup html, /(?<=>)(- (?:.|\n)*?)(?=<\/p>)/,
+                          :fix_markdown_list
+        html
       end
 
-      def fix_gtkdoc_markup(node, regex, replacement)
-        node.inner_html = node.inner_html.gsub(regex) do
-          method(replacement).call($1) rescue $&
-        end
+      def fix_gtkdoc_markup(html, regex, replacement)
+        html.gsub!(regex) { method(replacement).call($1) rescue $& }
       end
 
       def fix_parentheses_link(symbol)
