@@ -4,8 +4,8 @@ module Docs
     # etc.
     class FixGtkdocFilter
       NAMESPACES = {
-        'g' => 'gobject',
-        'gtk' => 'gtk'
+        'g' => 'GObject',
+        'gtk' => 'Gtk'
       }
 
       def process(html)
@@ -26,8 +26,11 @@ module Docs
       # Fixes GtkDoc crosslinks such as function() and %CONSTANT.
       def fix_gtkdoc_link(symbol)
         c_prefix, symbol_link = parse_c_symbol symbol
-        fail "Don't modify the original" unless NAMESPACES.key? c_prefix
-        "<a href='#{NAMESPACES.fetch c_prefix}.#{symbol_link}'>#{symbol}</a>"
+        key = c_prefix.downcase
+        fail "Don't modify the original" unless NAMESPACES.key? key
+        namespace = NAMESPACES.fetch key
+        link = "#{namespace}.#{symbol_link}"
+        "<a href='#{link.downcase}'>#{link}</a>"
       end
 
       def fix_atsign_markup(symbol)
@@ -56,11 +59,11 @@ module Docs
 
       # Returns the namespace and the rest of the symbol.
       def parse_c_symbol(symbol)
-        return symbol.split('_', 2).map(&:downcase) if symbol.index '_'
+        return symbol.split('_', 2) if symbol.index '_'
         camelcase_match = symbol.match(/^[A-Z][a-z]*/)
-        return ['', symbol.downcase] unless camelcase_match
+        return ['', symbol] unless camelcase_match
         c_prefix = camelcase_match[0]
-        [c_prefix, symbol[c_prefix.length..-1]].map(&:downcase)
+        [c_prefix, symbol[c_prefix.length..-1]]
       end
     end
   end
