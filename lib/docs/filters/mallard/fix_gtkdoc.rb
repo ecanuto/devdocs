@@ -10,7 +10,7 @@ module Docs
 
       def process(html)
         fix_gtkdoc_markup html, /([A-Za-z_]+)\(\)/, :fix_gtkdoc_link
-        fix_gtkdoc_markup html, /%([A-Za-z_]+)/, :fix_gtkdoc_link
+        fix_gtkdoc_markup html, /[%#]([A-Za-z_]+)(?!:)/, :fix_gtkdoc_link
         fix_gtkdoc_markup html, /@([A-Za-z_]+)/, :fix_atsign_markup
         fix_gtkdoc_markup html, /(?<=>)(- (?:.|\n)*?)(?=<\/p>)/,
                           :fix_markdown_list
