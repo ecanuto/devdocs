@@ -30,6 +30,18 @@ module Docs
         object
       end
 
+      def additional_entries
+        entries = []
+
+        # Catch enum constants explained on an enum's page
+        css('dl.terms dt.terms').each do |node|
+          obj, member = *node.content.split('.', 2)
+          entries.push [member, nil, obj] if obj == name
+        end
+
+        entries
+      end
+
       def analyze_mallard_name
         namespace, object, method = *slug.split('.')
         object, property = *object.split('-', 2)
