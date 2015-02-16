@@ -11,6 +11,7 @@ module Docs
       def call
         css('p').each do |node|
           fix_gtkdoc_markup node, /([A-Za-z_]+)\(\)/, :fix_parentheses_link
+          fix_gtkdoc_markup node, /@([A-Za-z_]+)/, :fix_atsign_markup
         end
         doc
       end
@@ -25,6 +26,10 @@ module Docs
         c_prefix, symbol_link = parse_c_symbol symbol
         fail "Don't modify the original" unless NAMESPACES.key? c_prefix
         "<a href='#{NAMESPACES.fetch c_prefix}.#{symbol_link}'>#{symbol}</a>"
+      end
+
+      def fix_atsign_markup(symbol)
+        "<code>#{symbol}</code>"
       end
 
       # Returns the namespace and the rest of the symbol.
