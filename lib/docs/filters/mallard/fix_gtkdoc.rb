@@ -12,6 +12,7 @@ module Docs
         css('p').each do |node|
           fix_gtkdoc_markup node, /([A-Za-z_]+)\(\)/, :fix_parentheses_link
           fix_gtkdoc_markup node, /@([A-Za-z_]+)/, :fix_atsign_markup
+          fix_gtkdoc_markup node, /^(- .*)/, :fix_markdown_list
         end
         doc
       end
@@ -30,6 +31,11 @@ module Docs
 
       def fix_atsign_markup(symbol)
         "<code>#{symbol}</code>"
+      end
+
+      def fix_markdown_list(text)
+        list = text.split('- ').reject(&:empty?).join '</li><li>'
+        "<ul><li>#{list}</li></ul>"
       end
 
       # Returns the namespace and the rest of the symbol.
