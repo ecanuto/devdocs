@@ -9,18 +9,22 @@ module Docs
       }
 
       def call
-        css('p').each { |node| fix_parentheses_link node }
+        css('p').each do |node|
+          fix_gtkdoc_markup node, /([A-Za-z_]+)\(\)/, :fix_parentheses_link
+        end
         doc
       end
 
-      def fix_parentheses_link(node)
-        node.inner_html = node.inner_html.gsub(/([A-Za-z_]+)\(\)/) do
-          symbol = $1
-          c_prefix, symbol_link = parse_c_symbol symbol
-          return $& unless NAMESPACES.key? c_prefix
-          namespace = NAMESPACES.fetch c_prefix
-          "<a href='#{namespace}.#{symbol_link}'>#{symbol}</a>"
+      def fix_gtkdoc_markup(node, regex, replacement)
+        node.inner_html = node.inner_html.gsub(regex) do
+          method(replacement).call($1) rescue $&
         end
+      end
+
+      def fix_parentheses_link(symbol)
+        c_prefix, symbol_link = parse_c_symbol symbol
+        fail "Don't modify the original" unless NAMESPACES.key? c_prefix
+        "<a href='#{NAMESPACES.fetch c_prefix}.#{symbol_link}'>#{symbol}</a>"
       end
 
       # Returns the namespace and the rest of the symbol.
