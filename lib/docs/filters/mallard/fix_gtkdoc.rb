@@ -9,7 +9,8 @@ module Docs
       }
 
       def process(html)
-        fix_gtkdoc_markup html, /([A-Za-z_]+)\(\)/, :fix_parentheses_link
+        fix_gtkdoc_markup html, /([A-Za-z_]+)\(\)/, :fix_gtkdoc_link
+        fix_gtkdoc_markup html, /%([A-Za-z_]+)/, :fix_gtkdoc_link
         fix_gtkdoc_markup html, /@([A-Za-z_]+)/, :fix_atsign_markup
         fix_gtkdoc_markup html, /(?<=>)(- (?:.|\n)*?)(?=<\/p>)/,
                           :fix_markdown_list
@@ -22,7 +23,8 @@ module Docs
         html.gsub!(regex) { method(replacement).call($1) rescue $& }
       end
 
-      def fix_parentheses_link(symbol)
+      # Fixes GtkDoc crosslinks such as function() and %CONSTANT.
+      def fix_gtkdoc_link(symbol)
         c_prefix, symbol_link = parse_c_symbol symbol
         fail "Don't modify the original" unless NAMESPACES.key? c_prefix
         "<a href='#{NAMESPACES.fetch c_prefix}.#{symbol_link}'>#{symbol}</a>"
