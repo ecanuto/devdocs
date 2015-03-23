@@ -14,8 +14,6 @@ module Docs
         fix_gtkdoc_markup html, /@([A-Za-z_]+)/, :fix_atsign_markup
         fix_gtkdoc_markup html, /(?<=>)(- (?:.|\n)*?)(?=<\/p>)/,
                           :fix_markdown_list
-        fix_gtkdoc_markup html, /\|\[((?:.|\n)*?)\]\|/,
-                          :fix_program_listing_markup
         html
       end
 
@@ -40,21 +38,6 @@ module Docs
       def fix_markdown_list(text)
         list = text.split('- ').reject(&:empty?).join '</li><li>'
         "<ul><li>#{list}</li></ul>"
-      end
-
-      def fix_program_listing_markup(text)
-        language = ''
-        if text.sub!(/^&lt;!-- language="(.*)" --&gt;\n/, '')
-          language = " language='#{$1}'"
-        end
-
-        # <p> tags get added by Mallard. They signify that there was a blank
-        # line in the code there.
-        text.gsub! '</p>', "\n"
-        # Remove any other HTML markup (<> in the code will be escaped)
-        text.gsub!(/<.*?>/, '')
-
-        "<pre><code#{language}>#{text}</code></pre>"
       end
 
       # Returns the namespace and the rest of the symbol.
