@@ -1,5 +1,5 @@
 module Docs
-  class Mallard
+  class GirScraper
     # EntriesFilter for Mallard documentation. This figures out the metadata for
     # each page.
     class EntriesFilter < Docs::EntriesFilter

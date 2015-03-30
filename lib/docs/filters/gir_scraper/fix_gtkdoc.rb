@@ -1,5 +1,5 @@
 module Docs
-  class Mallard
+  class GirScraper
     # Filter that fixes all internal GtkDoc links such as function(), #type,
     # etc.
     class FixGtkdocFilter
