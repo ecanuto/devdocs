@@ -27,7 +27,7 @@ class GirCLI < Thor
     namespace = gir.root.elements['namespace']
     scraper_info = process_namespace namespace
     scraper_info[:slug] = generate_slug scraper_info[:name]
-    scraper_info[:version] = scraper_info[:apiversion]
+    scraper_info[:version] = compute_version gir, scraper_info
     write_scraper gir_path, scraper_info
   end
 
@@ -51,11 +51,30 @@ class GirCLI < Thor
       name.downcase.strip.gsub(/[^\w-]/, '')
     end
 
+    def determine_version(gir)
+      %w(MAJOR MINOR MICRO).map do |name|
+        selector = "string(//constant[@name='#{name}_VERSION']/@value)"
+        component = REXML::XPath.first gir, selector
+        # Try a more lenient search - would match e.g. GDK_PIXBUF_MAJOR
+        selector = "string(//constant[contains(@name, '#{name}')]/@value)"
+        component = REXML::XPath.first gir, selector if component == ''
+        fail 'No version found' if component == ''
+        component
+      end.join '.'
+    rescue
+      nil
+    end
+
+    def compute_version(gir, scraper_info)
+      version = determine_version gir
+      version = scraper_info[:apiversion] + ' API' if version.nil?
+      version
+    end
+
     def scraper_code(gir_path, info)
       code = <<-END.strip_heredoc
         module Docs
           class #{info[:slug].capitalize} < Mallard
-            # TODO: edit the 'version' element to your liking.
       #{info.each { |k, v| "    self.#{k} = '#{v}'" }.join "\n"}
             self.gir_path = '#{gir_path}'
           end
