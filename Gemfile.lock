@@ -87,6 +87,7 @@ GEM
       execjs (>= 0.3.0)
       json (>= 1.8.0)
     unix_utils (0.0.15)
+    xdg (2.2.3)
     yajl-ruby (1.2.1)
 
 PLATFORMS
@@ -116,4 +117,5 @@ DEPENDENCIES
   typhoeus
   uglifier
   unix_utils
+  xdg
   yajl-ruby

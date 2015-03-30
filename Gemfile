@@ -33,6 +33,7 @@ group :docs do
   gem 'html-pipeline'
   gem 'progress_bar', require: false
   gem 'unix_utils', require: false
+  gem 'xdg', require: false
 end
 
 group :test do
