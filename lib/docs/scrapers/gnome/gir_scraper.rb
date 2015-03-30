@@ -1,5 +1,9 @@
 module Docs
-  class Mallard < FileScraper
+  # GirScraper: Instead of being given a path to HTML documentation, this gets a
+  # path to a GIR file, which it runs through g-ir-doc-tool and yelp-build to
+  # generate the HTML documentation. It also runs a preprocessor on the HTML to
+  # fix some of the GtkDoc markup.
+  class GirScraper < FileScraper
     require 'docs/filters/mallard/fix_gtkdoc'
     attr_accessor :preprocessor
 

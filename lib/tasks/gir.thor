@@ -74,7 +74,7 @@ class GirCLI < Thor
     def scraper_code(gir_path, info)
       code = <<-END.strip_heredoc
         module Docs
-          class #{info[:slug].capitalize} < Mallard
+          class #{info[:slug].capitalize} < GirScraper
       #{info.each { |k, v| "    self.#{k} = '#{v}'" }.join "\n"}
             self.gir_path = '#{gir_path}'
           end
