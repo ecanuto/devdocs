@@ -4,7 +4,9 @@ module Docs
     DB_FILENAME = 'db.json'
 
     class << self
-      attr_accessor :name, :slug, :type, :version, :abstract
+      include Instrumentable
+
+      attr_accessor :name, :slug, :type, :version, :abstract, :links
 
       def inherited(subclass)
         subclass.type = type
@@ -36,7 +38,8 @@ module Docs
           type: type,
           version: version,
           index_path: index_path,
-          db_path: db_path }
+          db_path: db_path,
+          links: links }
       end
 
       def store_page(store, id)
@@ -63,8 +66,8 @@ module Docs
           end
 
           if index.present?
-            store.write INDEX_FILENAME, index.to_json
-            store.write DB_FILENAME, pages.to_json
+            store_index(store, INDEX_FILENAME, index)
+            store_index(store, DB_FILENAME, pages)
             true
           else
             false
@@ -76,6 +79,13 @@ module Docs
 
       def store_page?(page)
         page[:entries].present?
+      end
+
+      def store_index(store, filename, index)
+        old_json = store.read(filename) || '{}'
+        new_json = index.to_json
+        instrument "#{filename.remove('.json')}.doc", before: old_json, after: new_json
+        store.write(filename, new_json)
       end
     end
 

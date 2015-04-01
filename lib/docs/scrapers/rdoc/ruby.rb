@@ -10,8 +10,12 @@ module Docs
     #   --no-line-numbers \
     #   --op html .
 
-    self.version = '2.2.0'
+    self.version = '2.2.1'
     self.dir = '/Users/Thibaut/DevDocs/Docs/RDoc/Ruby'
+    self.links = {
+      home: 'https://www.ruby-lang.org/',
+      code: 'https://github.com/ruby/ruby'
+    }
 
     html_filters.replace 'rdoc/entries', 'ruby/entries'
 
@@ -44,9 +48,7 @@ module Docs
       /\AHTTP/i,
       /\AIRB/,
       /\AMakeMakefile/i,
-      /\AMiniTest/i,
       /\ANQXML/,
-      /\AOpenSSL/,
       /\AOptionParser\//,
       /\APrettyPrint/,
       /\APride/,
@@ -67,7 +69,7 @@ module Docs
       /\AXMP/]
 
     options[:attribution] = <<-HTML
-      Ruby Core &copy; 1993&ndash;2014 Yukihiro Matsumoto<br>
+      Ruby Core &copy; 1993&ndash;2015 Yukihiro Matsumoto<br>
       Licensed under the Ruby License.<br>
       Ruby Standard Library &copy; contributors<br>
       Licensed under their own licenses.

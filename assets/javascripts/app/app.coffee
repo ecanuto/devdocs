@@ -54,7 +54,8 @@
           includePaths: [/devdocs/]
           ignoreErrors: [/dpQuery/, /NPObject/]
           tags:
-            singleDoc: (!!@DOC).toString()
+            mode: if @DOC then 'single' else 'full'
+            iframe: (window.top isnt window).toString()
         .install()
       @previousErrorHandler = onerror
       window.onerror = @onWindowError.bind(@)
@@ -86,6 +87,7 @@
     @hideLoading()
     @welcomeBack() unless @doc
     @removeEvent 'ready bootError'
+    navigator.mozApps?.getSelf().onsuccess = -> app.mozApp = true
     return
 
   initDoc: (doc) ->
@@ -125,7 +127,7 @@
   reset: ->
     @store.clear()
     @settings.reset()
-    @db.reset()
+    @db?.reset()
     @appCache?.update()
     window.location = '/'
     return
@@ -209,7 +211,8 @@
     try
       # Need to sniff the user agent because some Android and Windows Phone devices don't take
       # resolution (dpi) into account when reporting device width/height.
-      @_isMobile ?= (window.matchMedia('(max-device-width: 767px), (max-device-height: 767px)').matches) or
+      @_isMobile ?= (window.matchMedia('(max-device-width: 767px)').matches) or
+                    (window.matchMedia('(max-device-height: 767px) and (max-device-width: 1024px)').matches) or
                     (navigator.userAgent.indexOf('Android') isnt -1 and navigator.userAgent.indexOf('Mobile') isnt -1) or
                     (navigator.userAgent.indexOf('IEMobile') isnt -1)
     catch

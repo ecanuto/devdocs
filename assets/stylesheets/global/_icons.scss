@@ -11,6 +11,13 @@
   %icon { background-image: image-url('icons@2x.png'); }
 }
 
+%darkIconFix {
+  @if $style == 'dark' {
+    filter: invert(100%) grayscale(100%);
+    -webkit-filter: invert(100%) grayscale(100%);
+  }
+}
+
 /* GNOME-specific icons; put in a separate sprite to avoid merge conflicts. */
 /* Create the sprites with
    convert icon1.png icon2.png ... +append assets/images/gnome-icons.png */
@@ -60,20 +67,20 @@
 %icon-close-white           { background-position: -4rem 0; }
 %icon-settings              { background-position: -5rem 0; }
 %icon-check                 { background-position: -6rem 0; }
-._icon-http:before          { background-position: -7rem 0; }
-._icon-jquery:before        { background-position: -8rem 0; }
-._icon-underscore:before    { background-position: -9rem 0; }
+._icon-http:before          { background-position: -7rem 0; @extend %darkIconFix !optional; }
+._icon-jquery:before        { background-position: -8rem 0; @extend %darkIconFix !optional; }
+._icon-underscore:before    { background-position: -9rem 0; @extend %darkIconFix !optional; }
 ._icon-html:before          { background-position: 0 -1rem; }
 ._icon-css:before           { background-position: -1rem -1rem; }
 ._icon-dom:before           { background-position: -2rem -1rem; }
 ._icon-dom_events:before    { background-position: -3rem -1rem; }
 ._icon-javascript:before    { background-position: -4rem -1rem; }
-._icon-backbone:before      { background-position: -5rem -1rem; }
+._icon-backbone:before      { background-position: -5rem -1rem; @extend %darkIconFix !optional; }
 ._icon-node:before          { background-position: -6rem -1rem; }
 ._icon-sass:before          { background-position: -7rem -1rem; }
 ._icon-less:before          { background-position: -8rem -1rem; }
 ._icon-angular:before       { background-position: -9rem -1rem; }
-._icon-coffeescript:before  { background-position: 0 -2rem; }
+._icon-coffeescript:before  { background-position: 0 -2rem; @extend %darkIconFix !optional; }
 ._icon-ember:before         { background-position: -1rem -2rem; }
 %icon-menu                  { background-position: -2rem -2rem; }
 %icon-home                  { background-position: -3rem -2rem; }
@@ -81,19 +88,20 @@
 ._icon-jquerymobile:before  { background-position: -5rem -2rem; }
 ._icon-lodash:before        { background-position: -6rem -2rem; }
 ._icon-php:before           { background-position: -7rem -2rem; }
-._icon-ruby:before          { background-position: -8rem -2rem; }
+._icon-ruby:before,
+._icon-minitest:before      { background-position: -8rem -2rem; }
 ._icon-rails:before         { background-position: -9rem -2rem; }
-._icon-python:before        { background-position: 0 -3rem; }
+._icon-python:before,
 ._icon-python2:before       { background-position: 0 -3rem; }
 ._icon-git:before           { background-position: -1rem -3rem; }
 ._icon-redis:before         { background-position: -2rem -3rem; }
 ._icon-postgresql:before    { background-position: -3rem -3rem; }
 ._icon-d3:before            { background-position: -4rem -3rem; }
 ._icon-knockout:before      { background-position: -5rem -3rem; }
-._icon-moment:before        { background-position: -6rem -3rem; }
+._icon-moment:before        { background-position: -6rem -3rem; @extend %darkIconFix !optional; }
 ._icon-c:before             { background-position: -7rem -3rem; }
 %icon-path                  { background-position: -8rem -3rem; }
-._icon-yii:before           { background-position: -9rem -3rem; }
+._icon-yii:before,
 ._icon-yii1:before          { background-position: -9rem -3rem; }
 ._icon-cpp:before           { background-position: 0 -4rem; }
 ._icon-go:before            { background-position: -1rem -4rem; }
@@ -104,9 +112,9 @@
 ._icon-haskell:before       { background-position: -6rem -4rem; }
 ._icon-requirejs:before     { background-position: -7rem -4rem; }
 ._icon-chai:before          { background-position: -8rem -4rem; }
-._icon-sinon:before         { background-position: -9rem -4rem; }
+._icon-sinon:before         { background-position: -9rem -4rem; @extend %darkIconFix !optional; }
 ._icon-cordova:before       { background-position: 0 -5rem; }
-._icon-markdown:before      { background-position: -1rem -5rem; }
+._icon-markdown:before      { background-position: -1rem -5rem; @extend %darkIconFix !optional; }
 ._icon-django:before        { background-position: -2rem -5rem; }
 ._icon-xpath:before         { background-position: -3rem -5rem; }
 ._icon-nginx:before         { background-position: -4rem -5rem; }
@@ -114,7 +122,7 @@
 ._icon-marionette:before    { background-position: -6rem -5rem; }
 ._icon-mongoose:before      { background-position: -7rem -5rem; }
 ._icon-phpunit:before       { background-position: -8rem -5rem; }
-._icon-nokogiri:before      { background-position: -9rem -5rem; }
+._icon-nokogiri:before      { background-position: -9rem -5rem; @extend %darkIconFix !optional; }
 ._icon-rethinkdb:before     { background-position: 0 -6rem; }
 ._icon-react:before         { background-position: -1rem -6rem; }
 ._icon-socketio:before      { background-position: -2rem -6rem; }
@@ -127,7 +135,9 @@
 %icon-check-white           { background-position: -9rem -6rem; }
 %icon-light                 { background-position: 0 -7rem; }
 %icon-light-white           { background-position: -1rem -7rem; }
-._icon-iojs:before          { background-position: -2rem -7rem; }
-._icon-lua:before           { background-position: -3rem -7rem; }
+._icon-iojs:before          { background-position: -2rem -7rem; @extend %darkIconFix !optional; }
+._icon-lua:before           { background-position: -3rem -7rem; @extend %darkIconFix !optional; }
 ._icon-clojure:before       { background-position: -4rem -7rem; }
 ._icon-symfony:before       { background-position: -5rem -7rem; }
+._icon-mocha:before         { background-position: -6rem -7rem; }
+._icon-meteor:before        { background-position: -7rem -7rem; @extend %darkIconFix !optional; }

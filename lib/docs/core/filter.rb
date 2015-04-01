@@ -20,6 +20,10 @@ module Docs
       context[:base_url]
     end
 
+    def links
+      context[:links]
+    end
+
     def current_url
       context[:url]
     end

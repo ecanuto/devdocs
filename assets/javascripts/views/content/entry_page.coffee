@@ -36,6 +36,18 @@ class app.views.EntryPage extends app.View
     @trigger 'loaded'
     return
 
+  LINKS =
+    home: 'Homepage'
+    code: 'Source code'
+
+  prepareContent: (content) ->
+    return content unless @entry.isIndex() and @entry.doc.links
+
+    links = for link, url of @entry.doc.links
+      """<a href="#{url}" class="_links-link">#{LINKS[link]}</a>"""
+
+    """<p class="_links">#{links.join('')}</p>#{content}"""
+
   empty: ->
     @subview?.deactivate()
     @subview = null
@@ -77,8 +89,9 @@ class app.views.EntryPage extends app.View
     return
 
   onSuccess: (response) =>
+    return unless @activated
     @xhr = null
-    @render response
+    @render @prepareContent(response)
     return
 
   onError: =>

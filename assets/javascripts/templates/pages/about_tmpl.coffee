@@ -13,8 +13,8 @@ app.templates.aboutPage = -> """
   <p>DevDocs combines multiple API documentations in a fast, organized, and searchable interface.
   <ul>
     <li>Created and maintained by <a href="http://thibaut.me">Thibaut Courouble</a>
-    <li>Made at <a href="http://devdocs.io/s/shopify">Shopify</a> &mdash; one of the best software companies in the world
-    <li>Powered by <a href="http://devdocs.io/s/maxcdn" title="Content Delivery Network Services">MaxCDN</a> &mdash; content delivery that developers love
+    <li>Supported by <a href="http://devdocs.io/s/shopify">Shopify</a>
+    <li>Powered by <a href="http://devdocs.io/s/maxcdn" title="Content Delivery Network Services">MaxCDN</a>
     <li>Free and <a href="https://github.com/Thibaut/devdocs">open source</a>
         <iframe class="_github-btn" src="http://ghbtns.com/github-btn.html?user=Thibaut&repo=devdocs&type=watch&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="100" height="20"></iframe>
   </ul>
@@ -24,7 +24,7 @@ app.templates.aboutPage = -> """
     <li>Follow <a href="https://twitter.com/DevDocs">@DevDocs</a> on Twitter
     <li>Join the <a href="https://groups.google.com/d/forum/devdocs">mailing list</a>
   </ul>
-  <p class="_note _note-green">If you like DevDocs, please consider funding the project on
+  <p class="_note _note-green">If you like DevDocs, please consider supporting my work on
     <a href="https://gratipay.com/Thibaut/">Gratipay</a>. Thanks!<br>
 
   <h2 class="_lined-heading" id="credits">Credits</h2>
@@ -77,7 +77,7 @@ app.templates.aboutPage = -> """
 
 credits = [
   [ 'Angular.js',
-    '2010-2014 Google, Inc.',
+    '2010-2015 Google, Inc.',
     'CC BY',
     'http://creativecommons.org/licenses/by/3.0/'
   ], [
@@ -117,7 +117,7 @@ credits = [
     'https://raw.githubusercontent.com/apache/cordova-docs/master/LICENSE'
   ], [
     'CSS<br>DOM<br>HTML<br>JavaScript<br>SVG<br>XPath',
-    '2005-2014 Mozilla Developer Network and individual contributors',
+    '2005-2015 Mozilla Developer Network and individual contributors',
     'CC BY-SA',
     'http://creativecommons.org/licenses/by-sa/2.5/'
   ], [
@@ -160,11 +160,6 @@ credits = [
     'The University of Glasgow',
     'BSD',
     'http://www.haskell.org/ghc/license'
-  ], [
-    'HTTP',
-    '1999 The Internet Society',
-    'Custom',
-    'http://www.w3.org/Protocols/rfc2616/rfc2616-sec21.html#sec21'
   ], [
     'io.js',
     'io.js contributors',
@@ -212,7 +207,7 @@ credits = [
     'http://www.lua.org/license.html'
   ], [
     'Marionette.js',
-    '2014 Muted Solutions, LLC',
+    '2015 Muted Solutions, LLC',
     'MIT',
     'http://mutedsolutions.mit-license.org/'
   ], [
@@ -225,6 +220,21 @@ credits = [
     '2015 MaxCDN',
     'MIT',
     'https://raw.githubusercontent.com/MaxCDN/api-docs/master/LICENSE'
+  ], [
+    'Meteor',
+    '2011-2015 Meteor Development Group',
+    'MIT',
+    'https://raw.githubusercontent.com/meteor/meteor/master/LICENSE.txt'
+  ], [
+    'Minitest',
+    'Ryan Davis, seattle.rb',
+    'MIT',
+    'https://raw.githubusercontent.com/seattlerb/minitest/master/README.txt'
+  ], [
+    'Mocha',
+    '2011-2015 TJ Holowaychuk',
+    'MIT',
+    'https://raw.githubusercontent.com/mochajs/mocha/master/LICENSE'
   ], [
     'Modernizr',
     '2009-2014 Modernizr',
@@ -242,7 +252,7 @@ credits = [
     'https://github.com/LearnBoost/mongoose/blob/master/README.md#license'
   ], [
     'nginx',
-    '2002-2014 Igor Sysoev<br>&copy; 2011-2014 Nginx, Inc.',
+    '2002-2015 Igor Sysoev<br>&copy; 2011-2015 Nginx, Inc.',
     'BSD',
     'http://nginx.org/LICENSE'
   ], [
@@ -262,7 +272,7 @@ credits = [
     'http://creativecommons.org/licenses/by/3.0/'
   ], [
     'PHPUnit',
-    '2005-2014 Sebastian Bergmann',
+    '2005-2015 Sebastian Bergmann',
     'CC BY',
     'http://creativecommons.org/licenses/by/3.0/'
   ], [
@@ -277,7 +287,7 @@ credits = [
     'http://docs.python.org/3/license.html'
   ], [
     'React',
-    '2013-2014 Facebook Inc.',
+    '2013-2015 Facebook Inc.',
     'CC BY',
     'https://raw.githubusercontent.com/facebook/react/master/LICENSE-docs'
   ], [
@@ -297,12 +307,12 @@ credits = [
     'https://raw.githubusercontent.com/rethinkdb/docs/master/LICENSE'
   ], [
     'Ruby',
-    '1993-2014 Yukihiro Matsumoto',
+    '1993-2015 Yukihiro Matsumoto',
     'Ruby',
     'https://www.ruby-lang.org/en/about/license.txt'
   ], [
     'Ruby on Rails',
-    '2004-2014 David Heinemeier Hansson<br>Rails, Ruby on Rails, and the Rails logo are trademarks of David Heinemeier Hansson.',
+    '2004-2015 David Heinemeier Hansson<br>Rails, Ruby on Rails, and the Rails logo are trademarks of David Heinemeier Hansson.',
     'MIT',
     'https://raw.github.com/rails/rails/master/activerecord/MIT-LICENSE'
   ], [
@@ -312,7 +322,7 @@ credits = [
     'https://raw.github.com/nex3/sass/master/MIT-LICENSE'
   ], [
     'Sinon',
-    '2010-2014 Christian Johansen',
+    '2010-2015 Christian Johansen',
     'BSD',
     'https://raw.githubusercontent.com/cjohansen/Sinon.JS/master/LICENSE'
   ], [
@@ -327,7 +337,7 @@ credits = [
     'http://symfony.com/doc/current/contributing/code/license.html'
   ], [
     'Underscore.js',
-    '2009-2014 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
+    '2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors',
     'MIT',
     'https://raw.github.com/jashkenas/underscore/master/LICENSE'
   ], [
