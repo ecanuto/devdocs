@@ -32,7 +32,10 @@ group :docs do
   gem 'typhoeus'
   gem 'nokogiri', '~> 1.6.0'
   gem 'html-pipeline'
+  gem 'haml', require: false
+  gem 'haml-contrib', require: false
   gem 'progress_bar', require: false
+  gem 'redcarpet', require: false
   gem 'unix_utils', require: false
   gem 'xdg', require: false
 end

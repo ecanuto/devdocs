@@ -25,6 +25,10 @@ GEM
     eventmachine (1.0.7)
     execjs (2.4.0)
     ffi (1.9.8)
+    haml (4.0.6)
+      tilt
+    haml-contrib (1.0.0.1)
+      haml (>= 3.2.0.alpha.13)
     highline (1.6.21)
     hike (1.2.3)
     html-pipeline (1.11.0)
@@ -52,6 +56,7 @@ GEM
     rack-test (0.6.3)
       rack (>= 1.0)
     rake (10.4.2)
+    redcarpet (3.2.3)
     rr (1.1.2)
     sass (3.4.13)
     sinatra (1.4.6)
@@ -100,6 +105,8 @@ DEPENDENCIES
   browser
   coffee-script
   erubis
+  haml
+  haml-contrib
   html-pipeline
   minitest
   nokogiri (~> 1.6.0)
@@ -108,6 +115,7 @@ DEPENDENCIES
   rack
   rack-test
   rake
+  redcarpet
   rr
   sass
   sinatra

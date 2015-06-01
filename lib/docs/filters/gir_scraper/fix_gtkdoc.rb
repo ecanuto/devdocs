@@ -8,36 +8,29 @@ module Docs
         'gtk' => 'Gtk'
       }
 
-      def process(html)
-        fix_gtkdoc_markup html, /([A-Za-z_]+)\(\)/, :fix_gtkdoc_link
-        fix_gtkdoc_markup html, /[%#]([A-Za-z_]+)(?!:)/, :fix_gtkdoc_link
-        fix_gtkdoc_markup html, /@([A-Za-z_]+)/, :fix_atsign_markup
-        fix_gtkdoc_markup html, /(?<=>)(- (?:.|\n)*?)(?=<\/p>)/,
-                          :fix_markdown_list
-        html
+      def process(text)
+        fix_gtkdoc_markup text, /([A-Za-z_]+)\(\)/, :fix_gtkdoc_link
+        fix_gtkdoc_markup text, /[%#]([A-Za-z_]+)(?!:)/, :fix_gtkdoc_link
+        fix_gtkdoc_markup text, /@([A-Za-z_]+)/, :fix_atsign_markup
+        text
       end
 
-      def fix_gtkdoc_markup(html, regex, replacement)
-        html.gsub!(regex) { method(replacement).call($1) rescue $& }
+      def fix_gtkdoc_markup(text, regex, replacement)
+        text.gsub!(regex) { method(replacement).call($1) }
       end
 
       # Fixes GtkDoc crosslinks such as function() and %CONSTANT.
       def fix_gtkdoc_link(symbol)
         c_prefix, symbol_link = parse_c_symbol symbol
         key = c_prefix.downcase
-        fail "Don't modify the original" unless NAMESPACES.key? key
+        return "`#{symbol}`" unless NAMESPACES.key? key
         namespace = NAMESPACES.fetch key
         link = "#{namespace}.#{symbol_link}"
-        "<a href='#{link.downcase}'>#{link}</a>"
+        "[`#{link}`](#{link.downcase})"
       end
 
       def fix_atsign_markup(symbol)
-        "<code>#{symbol}</code>"
-      end
-
-      def fix_markdown_list(text)
-        list = text.split('- ').reject(&:empty?).join '</li><li>'
-        "<ul><li>#{list}</li></ul>"
+        "`#{symbol}`"
       end
 
       # Returns the namespace and the rest of the symbol.

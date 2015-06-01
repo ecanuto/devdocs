@@ -9,25 +9,15 @@ module Docs
 
       # "name" is the title that the documentation page has in the left sidebar.
       def get_name
-        node = at_css('h1.title')
-        result = node.content.strip
-
-        namespace = analyze_mallard_name[0]
-        result.sub!(namespace + '.', '')
-        result.sub!(type + '.', '')
-        result << '()' if type == FUNCTIONS_HEADING || result.match(/prototype\./)
-        result.sub!(/prototype\./, '')
-        result
+        node = at_css('h1')
+        node.content.strip
       end
 
       # "type" is the heading that the documentation page is displayed under, in
       # the left sidebar.
       def get_type
-        object = analyze_mallard_name[1]
-        return FUNCTIONS_HEADING if object.match(/^[a-z]/)
-        return FUNCTION_TYPES_HEADING if object.match(/Func$/)
-        return CONSTANTS_HEADING unless object.match(/[a-z]/)
-        object
+        node = at_css('h1')
+        node.content.strip
       end
 
       def additional_entries
@@ -40,12 +30,6 @@ module Docs
         end
 
         entries
-      end
-
-      def analyze_mallard_name
-        namespace, object, method = *slug.split('.')
-        object, property = *object.split('-', 2)
-        [namespace, object, method, property]
       end
     end
   end
