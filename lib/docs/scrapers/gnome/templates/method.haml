@@ -1,0 +1,15 @@
+%h2{:class => cls} #{name}(#{invocation})
+%dl
+  %dt Parameters:
+  %dd
+    %ul
+      - params.each do |p|
+        %li
+          :markdown
+            **#{p[:name]}** (`#{p[:type]}`) &mdash; #{p[:documentation]}
+  %dt Returns:
+  %dd
+    :markdown
+      (`#{m[:ret_type]}`) #{m[:ret_documentation]}
+:markdown
+  #{m[:documentation]}

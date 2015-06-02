@@ -122,13 +122,34 @@ module Docs
       }
     end
 
+    # Currently the same as analyze_method(), but we might want to do something
+    # with "invoker", for example.
+    def analyze_vfunc(elem)
+      analyze_method elem
+    end
+
     # Methods called from HAML code
+
+    def render_method(method, name, style_class)
+      params = method[:params]
+      engine = Haml::Engine.new load_template('method')
+      engine.render self, cls: style_class, m: method, name: name,
+                          params: params,
+                          invocation: (params.map { |p| p[:name] }).join(', ')
+    end
 
     def render_methods(elem)
       return '' if elem.elements['method'].nil?
       methods = REXML::XPath.match(elem, 'method')
       engine = Haml::Engine.new load_template('methods')
       engine.render self, methods: methods.map(&method(:analyze_method))
+    end
+
+    def render_vfuncs(elem)
+      return '' if elem.elements['virtual-method'].nil?
+      vfuncs = REXML::XPath.match(elem, 'virtual-method')
+      engine = Haml::Engine.new load_template('vfuncs')
+      engine.render self, vfuncs: vfuncs.map(&method(:analyze_vfunc))
     end
   end
 end

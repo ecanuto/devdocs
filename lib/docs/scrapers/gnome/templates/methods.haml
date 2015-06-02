@@ -1,18 +1,3 @@
 %h1 Methods
 - methods.each do |m|
-  - params = m[:params]
-  %h2.method #{m[:name]}(#{(params.map { |p| p[:name] }).join ', '})
-  %dl
-    %dt Parameters:
-    %dd
-      %ul
-        - params.each do |p|
-          %li
-            :markdown
-              **#{p[:name]}** (`#{p[:type]}`) &mdash; #{p[:documentation]}
-    %dt Returns:
-    %dd
-      :markdown
-        (`#{m[:ret_type]}`) #{m[:ret_documentation]}
-  :markdown
-    #{m[:documentation]}
+  = render_method m, m[:name], 'method'
