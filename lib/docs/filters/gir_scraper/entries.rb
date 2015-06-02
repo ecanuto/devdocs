@@ -17,7 +17,12 @@ module Docs
       # the left sidebar.
       def get_type
         node = at_css('h1')
-        node.content.strip
+        case node[:class]
+        when 'function' then FUNCTIONS_HEADING
+        when 'callback' then FUNCTION_TYPES_HEADING
+        when 'constant' then CONSTANTS_HEADING
+        else node.content.strip
+        end
       end
 
       def additional_entries
