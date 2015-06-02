@@ -4,6 +4,7 @@ module Docs
     # etc.
     class FixGtkdocFilter
       NAMESPACES = {
+        'atk' => 'Atk',
         'g' => 'GObject',
         'gtk' => 'Gtk'
       }
