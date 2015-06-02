@@ -23,6 +23,11 @@ module Docs
       def additional_entries
         entries = []
 
+        # We mark additional entries on a page with class "entry"
+        css('.entry').each do |node|
+          entries.push [node.content, node[:id]]
+        end
+
         # Catch enum constants explained on an enum's page
         css('dl.terms dt.terms').each do |node|
           obj, member = *node.content.split('.', 2)

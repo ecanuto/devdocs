@@ -1,4 +1,6 @@
-%h2{:class => cls} #{name}(#{invocation})
+%h2{:class => cls}
+  = succeed "(#{invocation})" do
+    %span.entry{:id => "#{cls}-#{name.gsub /_/, '-'}"}= name
 %dl
   %dt Parameters:
   %dd
