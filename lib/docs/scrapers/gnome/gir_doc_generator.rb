@@ -59,7 +59,8 @@ module Docs
       return '' unless elem.attributes['glib:is-gtype-struct-for'].nil?
       template = load_template elem.name
       engine = Haml::Engine.new template
-      engine.render self, elem: elem, documentation: get_doc_markdown(elem)
+      engine.render self, elem: elem, documentation: get_doc_markdown(elem),
+                          typename: elem[:name]
     end
 
     def write_page(elem)
