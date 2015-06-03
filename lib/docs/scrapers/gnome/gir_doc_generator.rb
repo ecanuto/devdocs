@@ -89,7 +89,7 @@ module Docs
     def gtype_to_js_type(typename)
       case typename
       when 'gboolean' then 'Boolean'
-      when 'gint' then 'Integer'
+      when 'gint' then 'Number'
       when 'utf8' then 'String'
       else typename
       end
