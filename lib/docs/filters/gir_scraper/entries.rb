@@ -10,7 +10,9 @@ module Docs
       # "name" is the title that the documentation page has in the left sidebar.
       def get_name
         node = at_css('h1')
-        node.content.strip
+        result = slug
+        result << '()' if node[:class] == 'function'
+        result
       end
 
       # "type" is the heading that the documentation page is displayed under, in
@@ -21,7 +23,7 @@ module Docs
         when 'function' then FUNCTIONS_HEADING
         when 'callback' then FUNCTION_TYPES_HEADING
         when 'constant' then CONSTANTS_HEADING
-        else node.content.strip
+        else slug
         end
       end
 
