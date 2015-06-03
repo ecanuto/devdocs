@@ -8,6 +8,11 @@ module Docs
         'g' => 'GObject',
         'gtk' => 'Gtk'
       }
+      KEYWORDS = {
+        'FALSE' => 'false',
+        'NULL' => 'null',
+        'TRUE' => 'true'
+      }
 
       def process(text)
         fix_gtkdoc_markup text, /([A-Za-z_]+)\(\)/, :fix_gtkdoc_link
@@ -22,6 +27,7 @@ module Docs
 
       # Fixes GtkDoc crosslinks such as function() and %CONSTANT.
       def fix_gtkdoc_link(symbol)
+        return "`#{KEYWORDS[symbol]}`" if KEYWORDS.key? symbol
         c_prefix, symbol_link = parse_c_symbol symbol
         key = c_prefix.downcase
         return "`#{symbol}`" unless NAMESPACES.key? key
