@@ -1,5 +1,5 @@
 require 'haml'
-require 'rexml/document'
+require 'nokogiri'
 require 'progress_bar'
 require 'docs/filters/gir_scraper/fix_gtkdoc'
 
@@ -22,9 +22,9 @@ module Docs
     end
 
     def load_gir(gir_path)
-      gir = REXML::Document.new(File.new gir_path)
-      namespace_el = gir.root.elements['namespace']
-      @namespace = namespace_el.attributes['name']
+      gir = Nokogiri::XML(File.new gir_path)
+      namespace_el = gir.root.at(:namespace)
+      @namespace = namespace_el[:name]
       @pages = namespace_el.elements
     end
 
@@ -50,13 +50,13 @@ module Docs
     end
 
     def get_doc_markdown(elem)
-      doc = elem.elements['doc']
+      doc = elem.at(:doc)
       return '' if doc.nil?
       @filter.process(doc.text)
     end
 
     def render_page(elem)
-      return '' unless elem.attributes['glib:is-gtype-struct-for'].nil?
+      return '' unless elem[:'glib:is-gtype-struct-for'].nil?
       template = load_template elem.name
       engine = Haml::Engine.new template
       engine.render self, elem: elem, documentation: get_doc_markdown(elem),
@@ -64,7 +64,7 @@ module Docs
     end
 
     def write_page(elem)
-      name = elem.attributes['name']
+      name = elem[:name]
       file = File.new File.join(@tmpdir, "#{name}.html"), 'w'
       html = render_page elem
       file.write html
@@ -97,25 +97,25 @@ module Docs
     end
 
     def to_js_type(elem)
-      array = elem.elements['array']
-      if elem.elements['array']
-        "Array(#{gtype_to_js_type(array.elements['type'].attributes['name'])})"
+      array = elem.at(:array)
+      if array
+        "Array(#{gtype_to_js_type(array.at(:type)[:name])})"
       else
-        gtype_to_js_type(elem.elements['type'].attributes['name'])
+        gtype_to_js_type(elem.at(:type)[:name])
       end
     end
 
     def analyze_parameter(elem)
-      { name: elem.attributes['name'],
+      { name: elem[:name],
         type: to_js_type(elem),
         documentation: get_doc_markdown(elem)
       }
     end
 
     def analyze_method(elem)
-      params = REXML::XPath.match(elem, 'parameters/parameter')
-      retval = elem.elements['return-value']
-      { name: elem.attributes['name'],
+      params = elem.css 'parameters > parameter'
+      retval = elem.at(:'return-value')
+      { name: elem[:name],
         params: params.map(&method(:analyze_parameter)),
         documentation: get_doc_markdown(elem),
         ret_type: to_js_type(retval),
@@ -140,15 +140,15 @@ module Docs
     end
 
     def render_methods(elem)
-      return '' if elem.elements['method'].nil?
-      methods = REXML::XPath.match(elem, 'method')
+      methods = elem.css 'method'
+      return '' if methods.empty?
       engine = Haml::Engine.new load_template('methods')
       engine.render self, methods: methods.map(&method(:analyze_method))
     end
 
     def render_vfuncs(elem)
-      return '' if elem.elements['virtual-method'].nil?
-      vfuncs = REXML::XPath.match(elem, 'virtual-method')
+      vfuncs = elem.css 'virtual-method'
+      return '' if vfuncs.empty?
       engine = Haml::Engine.new load_template('vfuncs')
       engine.render self, vfuncs: vfuncs.map(&method(:analyze_vfunc))
     end

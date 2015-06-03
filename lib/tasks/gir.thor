@@ -1,4 +1,4 @@
-require 'rexml/document'
+require 'nokogiri'
 require 'xdg'
 
 # Command-line tools for creating scrapers from GIR files
@@ -24,7 +24,7 @@ class GirCLI < Thor
   def generate(gir_path)
     gir = read_gir gir_path
 
-    namespace = gir.root.elements['namespace']
+    namespace = gir.root.at(:namespace)
     scraper_info = process_namespace namespace
     scraper_info[:slug] = generate_slug scraper_info[:name]
     scraper_info[:version] = compute_version gir, scraper_info
@@ -34,16 +34,16 @@ class GirCLI < Thor
   no_commands do
     def read_gir(path)
       gir_file = File.new path
-      gir = REXML::Document.new gir_file
+      gir = Nokogiri::XML gir_file
       gir_file.close
       gir
     end
 
     def process_namespace(namespace)
       {
-        name: namespace.attributes['name'],
-        api_version: namespace.attributes['version'],
-        c_prefix: namespace.attributes['c:symbol-prefixes']
+        name: namespace[:name],
+        api_version: namespace[:version],
+        c_prefix: namespace[:'c:symbol-prefixes']
       }
     end
 
@@ -51,13 +51,15 @@ class GirCLI < Thor
       name.downcase.strip.gsub(/[^\w-]/, '')
     end
 
+    XML_NAMESPACES = { 'gir' => 'http://www.gtk.org/introspection/core/1.0' }
+
     def determine_version(gir)
       %w(MAJOR MINOR MICRO).map do |name|
-        selector = "string(//constant[@name='#{name}_VERSION']/@value)"
-        component = REXML::XPath.first gir, selector
+        selector = "string(//gir:constant[@name='#{name}_VERSION']/@value)"
+        component = gir.xpath selector, XML_NAMESPACES
         # Try a more lenient search - would match e.g. GDK_PIXBUF_MAJOR
-        selector = "string(//constant[contains(@name, '#{name}')]/@value)"
-        component = REXML::XPath.first gir, selector if component == ''
+        selector = "string(//gir:constant[contains(@name, '#{name}')]/@value)"
+        component = gir.xpath selector, XML_NAMESPACES if component == ''
         fail 'No version found' if component == ''
         component
       end.join '.'
@@ -67,7 +69,7 @@ class GirCLI < Thor
 
     def guess_version(gir)
       selector = '//namespace/*[@version]/@version'
-      versions = REXML::XPath.match(gir, selector).map do |ver|
+      versions = gir.xpath(selector).to_a.map do |ver|
         Gem::Version.new(ver.to_s.chomp '.')  # they can have stray periods
       end
       return nil if versions == []
