@@ -27,7 +27,7 @@ module Docs
         return "`#{symbol}`" unless NAMESPACES.key? key
         namespace = NAMESPACES.fetch key
         link = "#{namespace}.#{symbol_link}"
-        "[`#{link}`](#{link.downcase})"
+        "[`#{link}`](#{symbol_link.downcase})"
       end
 
       def fix_atsign_markup(symbol)
