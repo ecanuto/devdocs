@@ -1,7 +1,7 @@
 ctrlKey = if $.isMac() then 'cmd' else 'ctrl'
 navKey = if $.isWindows() then 'alt' else ctrlKey
 
-host = 'devdocs.io'
+host = 'http://ec2-52-32-237-163.us-west-2.compute.amazonaws.com:9292'
 
 app.templates.helpPage = """
   <div class="_toc">
@@ -16,7 +16,7 @@ app.templates.helpPage = """
   <h2 class="_lined-heading" id="search">Search</h2>
   <p>
     The search is case-insensitive and supports fuzzy matching (for queries longer than two characters).
-    For example, searching <code class="_label">bgcp</code> brings up <code class="_label">background-clip</code>.<br>
+    For example, searching <code class="_label">floadc</code> brings up <code class="_label">File.load_contents()</code>.<br>
     Abbreviations are also supported (<a href="#abbreviations">full list</a> below).
     For example, <code class="_label">gp</code> is an alias for <code class="_label">GdkPixbuf</code>.
   <dl>
@@ -110,7 +110,7 @@ app.templates.helpPage = """
     continue to type and it will refocus the search field and start showing new results.
 
   <h2 class="_lined-heading" id="abbreviations">Abbreviations</h2>
-  <p>Feel free to suggest new abbreviations on <a href="https://github.com/Thibaut/devdocs/issues/new">GitHub</a>.
+  <!--p>Feel free to suggest new abbreviations on <a href="https://github.com/Thibaut/devdocs/issues/new">GitHub</a>.-->
   <table class="_abbreviations">
     <tr>
       <th>Word
