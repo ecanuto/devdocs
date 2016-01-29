@@ -16,7 +16,7 @@ app.templates.helpPage = """
     The search is case-insensitive and supports fuzzy matching (for queries longer than two characters).
     For example, searching <code class="_label">bgcp</code> brings up <code class="_label">background-clip</code>.<br>
     Abbreviations are also supported (<a href="#abbreviations">full list</a> below).
-    For example, <code class="_label">$</code> is an alias for <code class="_label">jQuery</code>.
+    For example, <code class="_label">gp</code> is an alias for <code class="_label">GdkPixbuf</code>.
   <dl>
     <dt id="doc_search">Searching a single documentation
     <dd>

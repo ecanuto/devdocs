@@ -65,3 +65,8 @@ class app.models.Entry extends app.Model
     'ruby': 'rb'
     'sass': 'scss'
     'underscore.js': '_'
+
+  # Redefine rather than edit, in order to avoid merge conflicts
+  @ALIASES = ALIASES =
+    'gdkpixbuf': 'gp'
+    'javascript': 'js'
