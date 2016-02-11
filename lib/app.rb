@@ -37,7 +37,7 @@ class App < Sinatra::Application
       }]
     }
 
-    set :news_path, -> { File.join(root, assets_prefix, 'javascripts', 'news.json') }
+    set :news_path, -> { File.join(root, assets_prefix, 'javascripts', 'gnome_news.json') }
     set :news, -> { JSON.parse(File.read(news_path)) }
 
     Dir[docs_path, root.join(assets_prefix, '*/')].each do |path|
